@@ -16,7 +16,7 @@
   
   <h2>動画リンク:</h2>
   <p id="videoLink">ここに動画リンクが表示されます。</p>
-  <a href="${videoLink}">ダウンロード</a>
+  <a href="${videoLink}" target="_blank">ダウンロード</a>
   
   <script>
     document.getElementById('fetchButton').addEventListener('click', async function() {
@@ -27,8 +27,17 @@
         return;
       }
 
+      // YouTubeの動画IDをURLから抽出
+      const videoIdMatch = urlInput.match(/(?:https?:\/\/(?:www\.)?youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+      if (!videoIdMatch) {
+        alert('YouTubeのURLが無効です。');
+        return;
+      }
+
+      const videoId = videoIdMatch[1];  // 抽出した動画ID
+
       // InvidiousのAPIエンドポイントURL
-      const invidiousUrl = `https://inv.nadeko.net/api/v1/videos?url=${encodeURIComponent(urlInput)}`;
+      const invidiousUrl = `https://inv.nadeko.net/api/v1/videos/${videoId}`;
 
       try {
         // InvidiousのAPIにリクエストを送信
