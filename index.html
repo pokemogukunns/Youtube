@@ -44,50 +44,38 @@
 
       // InvidiousのAPIエンドポイントURL
       const invidiousUrl = `https://cors-anywhere.herokuapp.com/https://inv.nadeko.net/api/v1/videos/${videoId}`;
-      
-      // デバッグ用にURLを表示
-      showDebugInfo(`リクエストURL: ${invidiousUrl}`);
 
-      try {
-        // CORSヘッダーを追加してInvidiousのAPIにリクエストを送信
-        const response = await fetch(invidiousUrl, {
-          method: 'GET',
-          headers: {
-            'Origin': window.location.origin,  // 現在のページのオリジンを指定
-            'X-Requested-With': 'XMLHttpRequest'  // リクエストがAjaxであることを示す
-          }
-        });
-
-        // レスポンスが成功した場合
-        if (!response.ok) {
-          throw new Error('動画情報を取得できませんでした。');
-        }
-
-        const data = await response.json();
-        
-        // デバッグ用にAPIレスポンスを表示
-        showDebugInfo(`APIレスポンス: ${JSON.stringify(data, null, 2)}`);
-
-        // JSONからformatStreamsを取り出してURLを表示
-        if (data.formatStreams && data.formatStreams.length > 0) {
-          const videoUrl = data.formatStreams[0].url;
-          document.getElementById('videoLink').textContent = `動画URL: ${videoUrl}`;
-        } else {
-          showError('該当する動画が見つかりませんでした。');
-        }
-
-      } catch (error) {
-        console.error('エラー:', error);
-        showError('エラーが発生しました: ' + error.message);
-      }
-    });
-
-    // エラーメッセージを画面に表示する関数
-    function showError(message) {
-      const errorElement = document.getElementById('videoLink');
-      errorElement.textContent = message;
-      errorElement.style.color = 'red';  // エラーは赤文字で表示
+try {
+  const response = await fetch(invidiousUrl, {
+    method: 'GET',
+    headers: {
+      'Origin': window.location.origin  // CORSヘッダー
     }
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTPエラー: ${response.status}`);
+  }
+
+  const data = await response.json();
+  if (data.formatStreams && data.formatStreams.length > 0) {
+    const videoUrl = data.formatStreams[0].url;
+    document.getElementById('videoLink').textContent = `動画URL: ${videoUrl}`;
+  } else {
+    showError('該当する動画が見つかりませんでした。');
+  }
+
+} catch (error) {
+  console.error('エラー:', error);
+  showError('エラーが発生しました: ' + error.message);
+}
+
+function showError(message) {
+  const errorElement = document.getElementById('videoLink');
+  errorElement.textContent = message;
+  errorElement.style.color = 'red';
+}
+
 
     // デバッグ情報を画面に表示する関数
     function showDebugInfo(message) {
