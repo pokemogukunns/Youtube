@@ -49,9 +49,15 @@
       showDebugInfo(`リクエストURL: ${invidiousUrl}`);
 
       try {
-        // InvidiousのAPIにリクエストを送信
-        const response = await fetch(invidiousUrl);
-        
+        // CORSヘッダーを追加してInvidiousのAPIにリクエストを送信
+        const response = await fetch(invidiousUrl, {
+          method: 'GET',
+          headers: {
+            'Origin': window.location.origin,  // 現在のページのオリジンを指定
+            'X-Requested-With': 'XMLHttpRequest'  // リクエストがAjaxであることを示す
+          }
+        });
+
         // レスポンスが成功した場合
         if (!response.ok) {
           throw new Error('動画情報を取得できませんでした。');
