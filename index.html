@@ -22,8 +22,7 @@
   <!-- デバッグ情報を表示するための領域 -->
   <h3>デバッグ情報:</h3>
   <pre id="debugInfo"></pre>
-  
-  <script>
+    <script>
     // ボタンがクリックされたときに呼ばれる関数
     document.getElementById('fetchButton').addEventListener('click', async function() {
       const urlInput = document.getElementById('youtubeUrl').value.trim();
@@ -42,8 +41,8 @@
 
       const videoId = videoIdMatch[1];  // 抽出した動画ID
 
-      // 新しいInvidiousインスタンスのAPIエンドポイントURL
-      const invidiousUrl = `https://invidious.snopyta.org/api/v1/videos/${videoId}`;
+      // CORSプロキシを使用してInvidious APIエンドポイントURL
+      const invidiousUrl = `https://cors-anywhere.herokuapp.com/https://invidious.snopyta.org/api/v1/videos/${videoId}`;
       
       // デバッグ用にURLを表示
       showDebugInfo(`リクエストURL: ${invidiousUrl}`);
