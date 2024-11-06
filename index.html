@@ -22,7 +22,7 @@
   <!-- デバッグ情報を表示するための領域 -->
   <h3>デバッグ情報:</h3>
   <pre id="debugInfo"></pre>
-    <script>
+      <script>
     // ボタンがクリックされたときに呼ばれる関数
     document.getElementById('fetchButton').addEventListener('click', async function() {
       const urlInput = document.getElementById('youtubeUrl').value.trim();
@@ -70,7 +70,8 @@
         // JSONからformatStreamsを取り出してURLを表示
         if (data.formatStreams && data.formatStreams.length > 0) {
           const videoUrl = data.formatStreams[0].url;
-          document.getElementById('videoLink').textContent = `動画URL: ${videoUrl}`;
+          // 動画リンクを表示
+          document.getElementById('videoLink').innerHTML = `<a href="${videoUrl}" target="_blank">動画リンク: ${videoUrl}</a>`;
         } else {
           showError('該当する動画が見つかりませんでした。');
         }
