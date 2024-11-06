@@ -17,20 +17,26 @@
   <h2>動画リンク:</h2>
   <p id="videoLink">ここに動画リンクが表示されます。</p>
   <a href="${videoLink}" target="_blank">ダウンロード</a>
+
+  
+  <!-- デバッグ情報を表示するための領域 -->
+  <h3>デバッグ情報:</h3>
+  <pre id="debugInfo"></pre>
   
   <script>
+    // ボタンがクリックされたときに呼ばれる関数
     document.getElementById('fetchButton').addEventListener('click', async function() {
       const urlInput = document.getElementById('youtubeUrl').value.trim();
       
       if (!urlInput) {
-        alert('YouTubeのURLを入力してください！');
+        showError('YouTubeのURLを入力してください！');
         return;
       }
 
       // YouTubeの動画IDをURLから抽出
       const videoIdMatch = urlInput.match(/(?:https?:\/\/(?:www\.)?youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
       if (!videoIdMatch) {
-        alert('YouTubeのURLが無効です。');
+        showError('YouTubeのURLが無効です。');
         return;
       }
 
@@ -38,6 +44,9 @@
 
       // InvidiousのAPIエンドポイントURL
       const invidiousUrl = `https://inv.nadeko.net/api/v1/videos/${videoId}`;
+      
+      // デバッグ用にURLを表示
+      showDebugInfo(`リクエストURL: ${invidiousUrl}`);
 
       try {
         // InvidiousのAPIにリクエストを送信
@@ -50,19 +59,35 @@
 
         const data = await response.json();
         
+        // デバッグ用にAPIレスポンスを表示
+        showDebugInfo(`APIレスポンス: ${JSON.stringify(data, null, 2)}`);
+
         // JSONからformatStreamsを取り出してURLを表示
         if (data.formatStreams && data.formatStreams.length > 0) {
           const videoUrl = data.formatStreams[0].url;
           document.getElementById('videoLink').textContent = `動画URL: ${videoUrl}`;
         } else {
-          document.getElementById('videoLink').textContent = '該当する動画が見つかりませんでした。';
+          showError('該当する動画が見つかりませんでした。');
         }
 
       } catch (error) {
         console.error('エラー:', error);
-        document.getElementById('videoLink').textContent = 'エラーが発生しました。';
+        showError('エラーが発生しました: ' + error.message);
       }
     });
+
+    // エラーメッセージを画面に表示する関数
+    function showError(message) {
+      const errorElement = document.getElementById('videoLink');
+      errorElement.textContent = message;
+      errorElement.style.color = 'red';  // エラーは赤文字で表示
+    }
+
+    // デバッグ情報を画面に表示する関数
+    function showDebugInfo(message) {
+      const debugElement = document.getElementById('debugInfo');
+      debugElement.textContent = message;
+    }
   </script>
 </body>
 </html>
