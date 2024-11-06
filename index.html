@@ -42,7 +42,7 @@
       const videoId = videoIdMatch[1];  // 抽出した動画ID
 
       // CORSプロキシを使用してInvidious APIエンドポイントURL
-      const invidiousUrl = `https://cors-anywhere.herokuapp.com/https://invidious.snopyta.org/api/v1/videos/${videoId}`;
+      const invidiousUrl = `https://thingproxy.freeboard.io/fetch/https://invidious.snopyta.org/api/v1/videos/${videoId}`;
       
       // デバッグ用にURLを表示
       showDebugInfo(`リクエストURL: ${invidiousUrl}`);
