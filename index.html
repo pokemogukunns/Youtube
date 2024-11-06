@@ -43,7 +43,7 @@
       const videoId = videoIdMatch[1];  // 抽出した動画ID
 
       // InvidiousのAPIエンドポイントURL
-      const invidiousUrl = `https://inv.nadeko.net/api/v1/videos/${videoId}`;
+      const invidiousUrl = `https://cors-anywhere.herokuapp.com/https://inv.nadeko.net/api/v1/videos/${videoId}`;
       
       // デバッグ用にURLを表示
       showDebugInfo(`リクエストURL: ${invidiousUrl}`);
