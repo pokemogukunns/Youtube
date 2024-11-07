@@ -58,6 +58,19 @@
                     // iframeを表示
                     iframeContainer.innerHTML = ''; // 前回のiframeを消去
                     iframeContainer.appendChild(iframe);
+
+      const downloadLinkContainer = document.getElementById("downloadLinkContainer");
+                    const videoUrl = data.video_url;  // 動画のURL（適切なキーを確認）
+                    if (videoUrl) {
+                        const downloadLink = document.createElement("a");
+                        downloadLink.href = videoUrl;
+                        downloadLink.target = "_blank";
+                        downloadLink.textContent = "ダウンロード";
+                        downloadLinkContainer.innerHTML = '';  // 既存のリンクを消去
+                        downloadLinkContainer.appendChild(downloadLink);
+                    } else {
+                        downloadLinkContainer.innerHTML = "ダウンロードリンクは利用できません。";
+                    }
       
       // デバッグ用にURLを表示
       showDebugInfo(` リクエストURL: ${invidiousUrl}`);
