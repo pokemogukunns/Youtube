@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invidious API リクエスト</title>
+</head>
+<body>
+    <h1>YouTube URLを入力してください</h1>
+    
+    <label for="youtubeUrl">YouTube URL:</label>
+    <input type="text" id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=videoID">
+    <button onclick="fetchVideoData()">データ取得</button>
+    
+    <h2>動画情報:</h2>
+    <pre id="responseOutput"></pre>
+
+    <script>
+        // InvidiousのインスタンスURL（例：invidious.snopyta.org）
+        const invidiousBaseUrl = "https://invidious.snopyta.org/api/v1/";
+
+        function fetchVideoData() {
+            // テキストボックスからURLを取得
+            const youtubeUrl = document.getElementById("youtubeUrl").value;
+
+            // URLから動画IDを抽出
+            const videoId = getYouTubeVideoId(youtubeUrl);
+
+            if (!videoId) {
+                alert("無効なYouTube URLです。");
+                return;
+            }
+
+            // Invidious APIリクエスト
+            const apiUrl = `${invidiousBaseUrl}videos/${videoId}`;
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // 取得したJSONデータを表示
+                    document.getElementById("responseOutput").textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    console.error("エラーが発生しました:", error);
+                    alert("エラーが発生しました。再度お試しください。");
+                });
+        }
+
+        // YouTubeのURLから動画IDを抽出する関数
+        function getYouTubeVideoId(url) {
+            const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+            const match = url.match(regex);
+            return match ? match[1] : null;
+        }
+    </script>
+</body>
+</html>
