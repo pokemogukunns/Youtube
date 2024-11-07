@@ -44,9 +44,23 @@
 
       // CORSプロキシを使用してInvidious APIエンドポイントURL
       const invidiousUrl = `https://thingproxy.freeboard.io/fetch/https://inv.nadeko.net/api/v1/videos/${videoId}`;
+
+               // 動画をiframeで埋め込む
+                    const iframeContainer = document.getElementById("videoIframeContainer");
+                    const iframe = document.createElement("iframe");
+                    iframe.src = `https://inv.nadeko.net/api/v1/videos/${videoId}`;
+                    iframe.width = "560";
+                    iframe.height = "315";
+                    iframe.frameborder = "0";
+                    iframe.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture";
+                    iframe.allowfullscreen = true;
+
+                    // iframeを表示
+                    iframeContainer.innerHTML = ''; // 前回のiframeを消去
+                    iframeContainer.appendChild(iframe);
       
       // デバッグ用にURLを表示
-      showDebugInfo(`<iframe src="https://thingproxy.freeboard.io/fetch/https://inv.nadeko.net/api/v1/videos/${videoId}"></iframe> リクエストURL: ${invidiousUrl}`);
+      showDebugInfo(` リクエストURL: ${invidiousUrl}`);
 
       try {
         // CORSヘッダーを追加してInvidiousのAPIにリクエストを送信
