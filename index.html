@@ -51,11 +51,6 @@
                     const iframeContainer = document.getElementById("videoIframeContainer");
                     const iframe = document.createElement("iframe");
                     iframe.src = `https://thingproxy.freeboard.io/fetch/https://inv.nadeko.net/api/v1/videos/${videoId}`;
-                    iframe.width = "560";
-                    iframe.height = "315";
-                    iframe.frameborder = "0";
-                    iframe.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture";
-                    iframe.allowfullscreen = true;
 
                     // iframeを表示
                     iframeContainer.innerHTML = ''; // 前回のiframeを消去
