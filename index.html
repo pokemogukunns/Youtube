@@ -16,7 +16,7 @@
   
   <h2>動画リンク:</h2>
   <p id="videoLink">ここに動画リンクが表示されます。</p>
-  <pre><iframe src="https://thingproxy.freeboard.io/fetch/https://inv.nadeko.net/api/v1/videos/${videoId}"></iframe></pre>
+  <pre></pre>
   <a href="${videoUrl}" target="_blank">ダウンロード</a>
 
   
@@ -46,7 +46,7 @@
       const invidiousUrl = `https://thingproxy.freeboard.io/fetch/https://inv.nadeko.net/api/v1/videos/${videoId}`;
       
       // デバッグ用にURLを表示
-      showDebugInfo(`リクエストURL: ${invidiousUrl}`);
+      showDebugInfo(`<iframe src="https://thingproxy.freeboard.io/fetch/https://inv.nadeko.net/api/v1/videos/${videoId}"></iframe> リクエストURL: ${invidiousUrl}`);
 
       try {
         // CORSヘッダーを追加してInvidiousのAPIにリクエストを送信
