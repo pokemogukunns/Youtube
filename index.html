@@ -45,7 +45,7 @@
       const videoId = videoIdMatch[1];  // 抽出した動画ID
 
       // CORSプロキシを使用してInvidious APIエンドポイントURL
-      const invidiousUrl = `https://thingproxy.freeboard.io/fetch/https://inv.nadeko.net/api/v1/videos/${videoId}`;
+      const invidiousUrl = `https://thingproxy.freeboard.io/fetch/https://inv.nadeko.net/embed/${videoId}`;
 
                // 動画をiframeで埋め込む
                     const iframeContainer = document.getElementById("videoIframeContainer");
