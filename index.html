@@ -49,12 +49,12 @@
 
                // 動画をiframeで埋め込む
                     const iframeContainer = document.getElementById("videoIframeContainer");
-                    const iframe = document.createElement("iframe");
-                    iframe.src = `https://thingproxy.freeboard.io/fetch/https://inv.nadeko.net/api/v1/videos/${videoId}`;
+                    const iframe = document.createElement("video");
+                    iframe.src = `https://thingproxy.freeboard.io/fetch/https://inv.nadeko.net/embed/${videoId}`;
 
                     // iframeを表示
-                    iframeContainer.innerHTML = ''; // 前回のiframeを消去
-                    iframeContainer.appendChild(iframe);
+                    iframeContainer.innerHTML = ''; // 前回のvideoを消去
+                    iframeContainer.appendChild(video);
 
       const downloadLinkContainer = document.getElementById("downloadLinkContainer");
                     const videoUrl = data.video_url;  // 動画のURL（適切なキーを確認）
